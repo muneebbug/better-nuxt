@@ -1,5 +1,17 @@
 {
-  "name": "nuxt4-starter",
+  "name": "better-nuxt",
+  "version": "0.0.1",
+  "description": "A better Nuxt 4 starter template with serverless support",
+  "author": "@muneebbug",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muneebbug/better-nuxt"
+  },
+  "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "nuxt4"
+  ],
   "type": "module",
   "private": true,
   "scripts": {
