@@ -10,6 +10,7 @@ interface Props extends PrimitiveProps {
   variant?: ButtonVariants["variant"]
   size?: ButtonVariants["size"]
   class?: HTMLAttributes["class"]
+  to?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,7 +24,18 @@ const props = withDefaults(defineProps<Props>(), {
     :as="as"
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"
+    v-if="!to"
   >
     <slot />
   </Primitive>
+  <NuxtLink
+    v-else
+    :to="to"
+    data-slot="button"
+    :as="as"
+    :as-child="asChild"
+    :class="cn(buttonVariants({ variant, size }), props.class)"
+  >
+    <slot />
+  </NuxtLink>
 </template>

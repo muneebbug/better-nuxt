@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { createResolver } from '@nuxt/kit'
 import tailwindcss from "@tailwindcss/vite";
+import { checkEnv } from "./config/env.config"
+import { env } from "node:process";
 
-
-const { resolve } = createResolver(import.meta.url)
+checkEnv(env);
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -19,6 +19,9 @@ export default defineNuxtConfig({
     prefix: '',
     componentDir: './app/components/ui'
   },
+  colorMode: {
+    classSuffix: ''
+  },
   components: [
     {
       path: './components/ui',
@@ -29,5 +32,5 @@ export default defineNuxtConfig({
       extensions: ['.vue'],
     },
   ],
-  modules: ['shadcn-nuxt', '@vueuse/nuxt']
+  modules: ['shadcn-nuxt', '@vueuse/nuxt', '@nuxtjs/color-mode']
 })
