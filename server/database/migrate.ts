@@ -1,6 +1,6 @@
 import { migrate } from "drizzle-orm/libsql/migrator";
-import config from "../config/drizzle.config";
-import { useDrizzle } from "../server/utils/drizzle";
+import config from "./drizzle.config";
+import { useDrizzle } from "../utils/drizzle";
 
 const db = useDrizzle();
 

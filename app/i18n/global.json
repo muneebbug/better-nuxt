@@ -1,0 +1,30 @@
+{
+  "en": {
+    "global": {
+      "appName": "Better Nuxt",
+      "nav": {
+        "admin": "Admin",
+        "features": "Features",
+        "pricing": "Pricing",
+        "docs": "Documentation"
+      },
+      "auth": {
+        "signIn": "Sign In",
+        "signOut": "Sign Out",
+        "profile": "Profile"
+      },
+      "page": {
+        "actions": "Actions",
+        "create": "Create",
+        "edit": "Edit",
+        "save": "Save",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "name": "Name",
+        "status": "Status",
+        "createdAt": "Created At",
+        "all": "All"
+      }
+    }
+  }
+}

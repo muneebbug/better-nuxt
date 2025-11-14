@@ -64,7 +64,7 @@
         <DropdownMenuTrigger as-child>
           <Button id="user-menu" variant="secondary" size="icon" class="rounded-full">
             <Avatar>
-              <AvatarImage :src="user?.image!" :alt="user?.name" />
+              <AvatarImage v-if="user?.image" :src="user?.image!" :alt="user?.name" />
               <AvatarFallback>{{ generateUserInitials(user?.name!) || 'U' }}</AvatarFallback>
             </Avatar>
             <span class="sr-only">Toggle user menu</span>
@@ -75,7 +75,7 @@
             <NuxtLink to="/account" class="w-full h-full py-2 px-4">Account</NuxtLink>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem class="p-0 cursor-pointer" @click="signOut">
+          <DropdownMenuItem class="p-0 cursor-pointer" @click="auth.signOut({ redirectTo: '/' })">
             <div class="w-full h-full py-2 px-4">Logout</div>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -96,14 +96,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { authClient } from '~~/lib/auth-client'
+const auth = useAuth()
 import { useColorMode } from '#imports'
 
-const { useSession } = authClient
-const { data } = await useSession(useFetch)
-const user = data.value?.user
 
-const { signOut } = authClient
+
+
+
+const { user } = useAuth()
+
+
 const { generateUserInitials } = useUtils()
 const route = useRoute()
 

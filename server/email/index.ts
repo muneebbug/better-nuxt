@@ -1,5 +1,6 @@
 import { type User } from "better-auth";
-import { userVerificationTemplate } from "./emailTemplates";
+import { userVerification } from "./templates/user-verification";
+
 
 export type EmailOptions = {
     from: string;
@@ -60,13 +61,43 @@ export const useMailgun = (): EmailService => {
     return { send };
 };
 
+export const useEmailService = () => {
+    if (process.env.NODE_ENV === "development") {
+        return useTestEmailService();
+    }
+    else if (process.env.NODE_ENV === "production") {
+        return useMailgun();
+    }
+    // Add other email services here (e.g., SendGrid, SES)
+    throw new Error("No email service configured");
+};
+
+export const useTestEmailService = () => {
+    const send = async (emailOptions: EmailOptions): Promise<void> => {
+        const { sendMail } = useNodeMailer();
+        await sendMail({
+            from: emailOptions.from,
+            to: emailOptions.to,
+            subject: emailOptions.subject,
+            text: emailOptions.text,
+            html: emailOptions.html,
+        });
+
+        console.log("Test Email sent successfully");
+    };
+
+    return { send };
+}
+
+
+
 
 
 export const sendUserVerificationEmail = async (user: User, url: string) => {
-    const emailHTML = await userVerificationTemplate(url, user);
+    const emailHTML = await userVerification(url, user);
 
     try {
-        await useMailgun().send({
+        await useEmailService().send({
             from: process.env.MAIL_FROM_EMAIL || "no-reply@localhost.com",
             to: user.email,
             subject: "Email Verification",

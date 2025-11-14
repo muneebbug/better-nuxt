@@ -154,7 +154,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { CheckCircle } from 'lucide-vue-next'
 
-import { authClient } from "~~/lib/auth-client"
 
 const formSchema = z.object({
   email: z.string({ message: 'Email is required' }).email({ message: 'Invalid email' }),
@@ -174,7 +173,7 @@ const { handleSubmit, isSubmitting, setFieldError, validateField } = useForm<Reg
   validationSchema: toTypedSchema(formSchema),
 })
 
-const { signUp } = authClient
+const auth = useAuth()
 const success = ref(false)
 
 const apiErrors = ref({
@@ -182,7 +181,7 @@ const apiErrors = ref({
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  await signUp.email({
+  await auth.signUp.email({
     email: values.email,
     password: values.password,
     name: values.firstName + ' ' + values.lastName,
@@ -203,6 +202,8 @@ const onSubmit = handleSubmit(async (values) => {
 
 definePageMeta({
   layout: 'auth',
-  middleware: 'auth-guest-only',
+  auth: {
+    only: 'guest'
+  }
 })
 </script>

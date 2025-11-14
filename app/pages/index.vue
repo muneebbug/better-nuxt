@@ -26,5 +26,4 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
 import { Rocket, ShieldCheck, Paintbrush } from 'lucide-vue-next'
-definePageMeta({ middleware: 'auth-public' })
 </script>

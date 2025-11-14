@@ -2,6 +2,8 @@
 import tailwindcss from "@tailwindcss/vite";
 import { checkEnv } from "./config/env.config"
 import { env } from "node:process";
+import { generateRuntimeConfig } from './server/utils/runtimeConfig'
+
 
 checkEnv(env);
 
@@ -14,6 +16,14 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+  },
+    i18n: {
+    vueI18n: '~/i18n/i18n.config.ts',
+    baseUrl: process.env.NUXT_APP_URL,
+    locales: [
+      { code: 'en', language: 'en-US', name: 'English' }
+    ],
+    defaultLocale: 'en',
   },
   shadcn: {
     prefix: '',
@@ -32,5 +42,27 @@ export default defineNuxtConfig({
       extensions: ['.vue'],
     },
   ],
-  modules: ['shadcn-nuxt', '@vueuse/nuxt', '@nuxtjs/color-mode']
+  runtimeConfig: generateRuntimeConfig(),
+  modules: [
+    'shadcn-nuxt',
+    '@vueuse/nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/i18n',
+    '@nuxtjs/seo',
+    // on dev, use nodemailer
+    ...(process.env.NODE_ENV === 'development' ? ['nuxt-nodemailer'] : []),
+  ],
+
+  ...(process.env.NODE_ENV === 'development' ? {
+    nodemailer: {
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+          user: process.env.NUXT_TEST_EMAIL_AUTH_USER,
+          pass: process.env.NUXT_TEST_EMAIL_AUTH_PASSWORD
+      }
+    }
+  }
+    : {})
+  
 })

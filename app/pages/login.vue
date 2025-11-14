@@ -76,7 +76,6 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { authClient } from "~~/lib/auth-client"
 import * as z from 'zod'
 
 import {
@@ -103,14 +102,16 @@ const { handleSubmit, isSubmitting } = useForm<LoginForm>({
 
 definePageMeta({
   layout: 'auth',
-  middleware: 'auth-guest-only',
+  auth: {
+    only: 'guest',
+  }
 })
 
-const { signIn } = authClient
+const auth = useAuth()
 const callbackURL = decodeURIComponent(useRoute().query.redirect as string || '/')
 
 const onSubmit = handleSubmit(async (values) => {
- const {data, error} = await signIn.email({
+ const {data, error} = await auth.signIn.email({
     email: values.email,
     password: values.password,
     callbackURL: callbackURL,
