@@ -4,7 +4,7 @@
       <span>© {{ year }} Nuxt 4 Starter</span>
       <div class="flex items-center gap-4">
         <NuxtLink to="/" class="hover:text-foreground">Home</NuxtLink>
-        <NuxtLink to="/account" class="hover:text-foreground">Account</NuxtLink>
+        <NuxtLink to="/protected" class="hover:text-foreground">Protected</NuxtLink>
         <a href="https://github.com/muneebbug/better-nuxt" target="_blank" class="hover:text-foreground">GitHub</a>
       </div>
     </div>

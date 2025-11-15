@@ -13,7 +13,6 @@ export function useAuth() {
   const url = useRequestURL()
   const headers = import.meta.server ? useRequestHeaders() : undefined
   const runtimeConfig = useRuntimeConfig()
-  const payment = runtimeConfig.public.payment as 'stripe' | 'polar'
   const client = createAuthClient({
     baseURL: useRuntimeConfig().public.baseURL,
     fetchOptions: {
@@ -116,7 +115,6 @@ export function useAuth() {
       })
     },
     fetchSession,
-    payment,
     client
   }
 }

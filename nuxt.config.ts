@@ -2,7 +2,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import { checkEnv } from "./config/env.config"
 import { env } from "node:process";
-import { generateRuntimeConfig } from './server/utils/runtimeConfig'
+import { generateRuntimeConfig } from './config/runtime.config'
 
 
 checkEnv(env);
@@ -17,6 +17,10 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  // devServer: {
+  //   host: '127.0.0.1',
+  //   port: 3000,
+  // },
     i18n: {
     vueI18n: '~/i18n/i18n.config.ts',
     baseUrl: process.env.NUXT_APP_URL,

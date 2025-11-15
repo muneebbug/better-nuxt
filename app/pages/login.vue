@@ -54,7 +54,6 @@
               <FormMessage />
             </FormItem>
           </FormField>
-          <div class="space-y-2">
             <Button
               class="w-full"
               type="submit"
@@ -62,11 +61,11 @@
             >
               Login
             </Button>
-          </div>
+            <FormError :error="formError" />
         </form>
         <p class="text-sm text-muted-foreground mt-6 text-center">
           Don’t have an account?
-          <NuxtLink to="/register" class="text-primary underline underline-offset-4 ml-1">Sign up</NuxtLink>
+          <NuxtLink to="/signup" class="text-primary underline underline-offset-4 ml-1">Sign up</NuxtLink>
         </p>
       </CardContent>
     </Card>
@@ -89,15 +88,34 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
-const formSchema = z.object({
-  email: z.string({ message: 'Email is required' }).email({ message: 'Invalid email' }),
-  password: z.string({ message: 'Password is required' }).min(8, { message: 'Password must be at least 8 characters long' }),
+import FormError from '~/components/form/FormError.vue'
+
+
+
+import { loginSchema } from '@@/shared/schemas/auth/login.schema'
+
+type LoginForm = z.infer<typeof loginSchema>
+
+const { handleSubmit, isSubmitting, errors } = useForm<LoginForm>({
+  validationSchema: toTypedSchema(loginSchema),
 })
 
-type LoginForm = z.infer<typeof formSchema>
+const auth = useAuth()
+const formError = ref<string | null>(null)
+const callbackURL = decodeURIComponent(useRoute().query.redirect as string || '/')
 
-const { handleSubmit, isSubmitting } = useForm<LoginForm>({
-  validationSchema: toTypedSchema(formSchema),
+const onSubmit = handleSubmit(async (values) => {
+  formError.value = null
+  const {data, error} = await auth.signIn.email({
+    email: values.email,
+    password: values.password,
+    callbackURL,
+  })
+  console.log(data, error)
+  if (error) {
+    formError.value = error.message!
+    return
+  }
 })
 
 definePageMeta({
@@ -105,17 +123,5 @@ definePageMeta({
   auth: {
     only: 'guest',
   }
-})
-
-const auth = useAuth()
-const callbackURL = decodeURIComponent(useRoute().query.redirect as string || '/')
-
-const onSubmit = handleSubmit(async (values) => {
- const {data, error} = await auth.signIn.email({
-    email: values.email,
-    password: values.password,
-    callbackURL: callbackURL,
-  })
-  console.log(data, error)
 })
 </script>

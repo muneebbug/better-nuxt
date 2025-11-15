@@ -6,7 +6,7 @@
         Minimal, fast, and practical starter with auth, UI components, and serverless-ready setup.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <Button to="/register">Get Started</Button>
+        <Button to="/signup">Get Started</Button>
         <Button as="a" href="https://github.com/muneebbug/better-nuxt" target="_blank" variant="outline" size="lg">View on GitHub</Button>
       </div>
     </div>

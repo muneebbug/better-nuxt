@@ -14,10 +14,10 @@
         Home
       </NuxtLink>
       <NuxtLink
-        to="/account"
+        to="/protected"
         class="text-muted-foreground transition-colors hover:text-foreground"
       >
-        Account
+        Protected
       </NuxtLink>
     </nav>
 
@@ -72,7 +72,7 @@
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem class="p-0 cursor-pointer">
-            <NuxtLink to="/account" class="w-full h-full py-2 px-4">Account</NuxtLink>
+            <NuxtLink to="/protected" class="w-full h-full py-2 px-4">Protected</NuxtLink>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem class="p-0 cursor-pointer" @click="auth.signOut({ redirectTo: '/' })">
@@ -112,7 +112,7 @@ const route = useRoute()
 const activeRoute = computed(() => route.path)
 const drawerRoutes = [
   { label: 'Home', icon: Home, to: '/' },
-  { label: 'Account', icon: User, to: '/account' },
+  { label: 'Protected', icon: Package2, to: '/protected' },
 ]
 
 // Color mode toggle

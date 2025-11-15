@@ -6,8 +6,8 @@
       </pre>
       <Card>
         <CardHeader>
-          <CardTitle>Account</CardTitle>
-          <CardDescription>Your profile information</CardDescription>
+          <CardTitle>Protected</CardTitle>
+          <CardDescription>This page is auth protected and is only accessible to authenticated users.</CardDescription>
         </CardHeader>
         <CardContent>
           <div v-if="user" class="flex items-center gap-4">
