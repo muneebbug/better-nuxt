@@ -4,7 +4,6 @@ import tryParseEnv from '../lib/try-parse-env'
 
 const EnvSchema = z.object({
   NODE_ENV: z.string(),
-  NITRO_PRESET: z.string(),
   NUXT_PUBLIC_APP_URL: z.string(),
   NUXT_PUBLIC_APP_NAME: z.string(),
 

@@ -26,7 +26,8 @@
     "db:studio": "drizzle-kit studio --config ./server/database/drizzle.config.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "prepare": "husky"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
@@ -72,8 +73,13 @@
     "@types/nodemailer": "^7.0.3",
     "drizzle-kit": "^0.31.6",
     "eslint-plugin-format": "^1.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "nodemailer": "^7.0.10",
     "nuxt-nodemailer": "^1.1.4",
     "typescript": "^5.9.3"
+  },
+  "lint-staged": {
+    "*": "pnpm lint"
   }
 }
