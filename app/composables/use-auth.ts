@@ -5,16 +5,15 @@ import type {
 } from 'better-auth/client'
 import type { RouteLocationRaw } from 'vue-router'
 
+
 import { adminClient, inferAdditionalFields } from 'better-auth/client/plugins'
 import { createAuthClient } from 'better-auth/vue'
-import type { User } from '~~/server/database/schema'
+import type { User } from '@@/server/database/schema'
 
 export function useAuth() {
-  const url = useRequestURL()
   const headers = import.meta.server ? useRequestHeaders() : undefined
-  const runtimeConfig = useRuntimeConfig()
   const client = createAuthClient({
-    baseURL: useRuntimeConfig().public.baseURL,
+    baseURL: process.env.NUXT_PUBLIC_APP_URL,
     fetchOptions: {
       headers
     },

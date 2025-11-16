@@ -4,7 +4,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "../database/schema";
 import { useDrizzle } from "../database/drizzle";
 
-import { sendUserVerificationEmail } from "../email";   
+import { sendResetPasswordEmail, sendUserVerificationEmail } from "../email";   
 
 export const auth = betterAuth({
     database: drizzleAdapter(useDrizzle(), {
@@ -43,8 +43,8 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
-        async sendResetPassword(url) {
-            console.log("Reset password url:", url);
+        async sendResetPassword({url, user}) {
+            await sendResetPasswordEmail(user, url);
         },
     },
     plugins: [

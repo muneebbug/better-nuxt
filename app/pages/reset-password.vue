@@ -2,24 +2,29 @@
   <div>
     <Card>
       <CardHeader class="p-6 pb-0">
-        <CardTitle>Login</CardTitle>
-        <CardDescription>Enter your email below to login to your account</CardDescription>
+        <CardTitle>Reset password</CardTitle>
+        <CardDescription>Enter your new password below</CardDescription>
       </CardHeader>
       <CardContent class="p-6 pt-4">
         <form
+          v-if="token && !formError"
           class="space-y-6 mb-4"
           @submit="onSubmit"
         >
           <FormField
             v-slot="{ componentField }"
-            name="email"
+            name="password"
           >
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel class="flex justify-between items-center">
+                <span>
+                  New Password
+                </span>
+              </FormLabel>
               <FormControl>
                 <Input
-                  type="text"
-                  placeholder="abc@gmail.com"
+                  type="password"
+                  placeholder="New Password"
                   v-bind="componentField"
                 />
               </FormControl>
@@ -28,26 +33,18 @@
           </FormField>
           <FormField
             v-slot="{ componentField }"
-            name="password"
+            name="confirmPassword"
           >
             <FormItem>
               <FormLabel class="flex justify-between items-center">
                 <span>
-                  Password
+                  Confirm Password
                 </span>
-                <NuxtLink
-                  to="/forgot-password"
-                  class="float-end font-normal text-sm text-primary"
-                >
-                  <span class="text-xs text-muted-foreground">
-                    Forgot password?
-                  </span>
-                </NuxtLink>
               </FormLabel>
               <FormControl>
                 <Input
                   type="password"
-                  placeholder="Password"
+                  placeholder="Confirm Password"
                   v-bind="componentField"
                 />
               </FormControl>
@@ -59,14 +56,29 @@
               type="submit"
               :loading="isSubmitting"
             >
-              Login
+              Reset Password
             </Button>
+            <FormSuccess :message="formSuccess" />
             <FormError :error="formError" />
         </form>
-        <p class="text-sm text-muted-foreground mt-6 text-center">
-          Don’t have an account?
-          <NuxtLink to="/signup" class="text-primary underline underline-offset-4 ml-1">Sign up</NuxtLink>
-        </p>
+        <div v-else>
+          <div class="text-center">
+            <p class="text-sm text-destructive mb-4"> Invalid or expired reset link. Please request a new password reset. </p>
+            <Button
+              class="w-full"
+              to="/forgot-password"
+            >
+              Request new reset link
+            </Button>
+          </div>
+        </div>
+        <Button
+          class="w-full"
+          variant="link"
+          to="/login"
+        >
+          Back to login
+        </Button>
       </CardContent>
     </Card>
   </div>
@@ -89,32 +101,35 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 import FormError from '~/components/form/form-error.vue'
+import { resetPasswordSchema } from '@@/shared/schemas/auth/reset-password.schema'
 
+type ResetPasswordRequestForm = z.infer<typeof resetPasswordSchema>
 
-
-import { loginSchema } from '@@/shared/schemas/auth/login.schema'
-
-type LoginForm = z.infer<typeof loginSchema>
-
-const { handleSubmit, isSubmitting } = useForm<LoginForm>({
-  validationSchema: toTypedSchema(loginSchema),
+const { handleSubmit, isSubmitting, errors } = useForm<ResetPasswordRequestForm>({
+  validationSchema: toTypedSchema(resetPasswordSchema),
 })
-
+const token = useRoute().query.token as string
 const auth = useAuth()
 const formError = ref<string | null>(null)
-const callbackURL = decodeURIComponent(useRoute().query.redirect as string || '/')
+const formSuccess = ref<string | null>(null)
+
+if (!token) {
+  formError.value = 'Invalid or expired reset link. Please request a new password reset.'
+}
 
 const onSubmit = handleSubmit(async (values) => {
-  formError.value = null
-  const {error} = await auth.signIn.email({
-    email: values.email,
-    password: values.password,
-    callbackURL,
+  formSuccess.value = null
+  const {error, data} = await auth.resetPassword({
+    token,
+    newPassword: values.password,
   })
+  console.log(data)
   if (error) {
     formError.value = error.message!
+
     return
   }
+  formSuccess.value = 'Password reset successfully'
 })
 
 definePageMeta({

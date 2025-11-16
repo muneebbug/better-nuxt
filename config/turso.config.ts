@@ -1,7 +1,9 @@
-const isProd = process.env.NODE_ENV === 'production';
+import env from './env.config';
+
+const isProd = env.NODE_ENV === 'production';
 
 export const tursoConfig = {
     isProd,
-    url: isProd ? process.env.NUXT_TURSO_DATABASE_URL as string : 'file:local.db',
-    authToken: process.env.NUXT_TURSO_AUTH_TOKEN as string
+    url: isProd ? env.NUXT_TURSO_DATABASE_URL : 'file:local.db',
+    authToken: env.NUXT_TURSO_AUTH_TOKEN
 };

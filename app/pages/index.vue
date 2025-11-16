@@ -24,6 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import Hero from '@/components/Hero.vue'
+import Hero from '~/components/hero.vue'
 import { Rocket, ShieldCheck, Paintbrush } from 'lucide-vue-next'
 </script>

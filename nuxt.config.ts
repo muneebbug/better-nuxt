@@ -1,29 +1,25 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
-import { checkEnv } from "./config/env.config"
-import { env } from "node:process";
-import { generateRuntimeConfig } from './config/runtime.config'
+import env from "./config/env.config";
 
-
-checkEnv(env);
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   css: ['./app/assets/css/main.css'],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
-  // devServer: {
-  //   host: '127.0.0.1',
-  //   port: 3000,
-  // },
+  devServer: {
+    host: '127.0.0.1',
+    port: 3000,
+  },
     i18n: {
     vueI18n: '~/i18n/i18n.config.ts',
-    baseUrl: process.env.NUXT_APP_URL,
+    baseUrl: env.NUXT_PUBLIC_APP_URL,
     locales: [
       { code: 'en', language: 'en-US', name: 'English' }
     ],
@@ -46,7 +42,14 @@ export default defineNuxtConfig({
       extensions: ['.vue'],
     },
   ],
-  runtimeConfig: generateRuntimeConfig(),
+  runtimeConfig: {
+    public: {
+      auth: {
+        redirectUserTo: '/',
+        redirectGuestTo: '/login'
+      },
+    }
+  },
   modules: [
     'shadcn-nuxt',
     '@vueuse/nuxt',
@@ -54,16 +57,16 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
     // on dev, use nodemailer
-    ...(process.env.NODE_ENV === 'development' ? ['nuxt-nodemailer'] : []),
+    ...(env.NODE_ENV === 'development' ? ['nuxt-nodemailer'] : []),
   ],
 
-  ...(process.env.NODE_ENV === 'development' ? {
+  ...(env.NODE_ENV === 'development' ? {
     nodemailer: {
       host: 'smtp.ethereal.email',
       port: 587,
       auth: {
-          user: process.env.NUXT_TEST_EMAIL_AUTH_USER,
-          pass: process.env.NUXT_TEST_EMAIL_AUTH_PASSWORD
+          user: env.NUXT_TEST_EMAIL_AUTH_USER,
+          pass: env.NUXT_TEST_EMAIL_AUTH_PASSWORD
       }
     }
   }

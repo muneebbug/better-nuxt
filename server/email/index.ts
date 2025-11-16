@@ -1,5 +1,8 @@
 import { type User } from "better-auth";
+import env from '../../config/env.config';
+
 import { userVerification } from "./templates/user-verification";
+import { resetPassword } from "./templates/reset-password";
 
 
 export type EmailOptions = {
@@ -16,8 +19,8 @@ export interface EmailService {
 
 
 export const useMailgun = (): EmailService => {
-    const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
-    const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
+    const MAILGUN_API_KEY = env.NUXT_MAILGUN_API_KEY;
+    const MAILGUN_DOMAIN = env.NUXT_MAILGUN_DOMAIN;
     const MAILGUN_API_URL = `https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`;
 
     const send = async (emailOptions: EmailOptions): Promise<void> => {
@@ -62,10 +65,10 @@ export const useMailgun = (): EmailService => {
 };
 
 export const useEmailService = () => {
-    if (process.env.NODE_ENV === "development") {
+    if (env.NODE_ENV === "development") {
         return useTestEmailService();
     }
-    else if (process.env.NODE_ENV === "production") {
+    else if (env.NODE_ENV === "production") {
         return useMailgun();
     }
     // Add other email services here (e.g., SendGrid, SES)
@@ -98,10 +101,27 @@ export const sendUserVerificationEmail = async (user: User, url: string) => {
 
     try {
         await useEmailService().send({
-            from: process.env.MAIL_FROM_EMAIL || "no-reply@localhost.com",
+            from: env.NUXT_MAIL_FROM_EMAIL || "no-reply@localhost.com",
             to: user.email,
             subject: "Email Verification",
             text: "Please click the following link to verify your email:",
+            html: emailHTML,
+        });
+        console.log("Email sent successfully");
+    } catch (error) {
+        console.error("Failed to send email:", error);
+    }
+}
+
+export const sendResetPasswordEmail = async (user: User, url: string) => {
+    const emailHTML = await resetPassword(url, user);
+
+    try {
+        await useEmailService().send({
+            from: env.NUXT_MAIL_FROM_EMAIL || "no-reply@localhost.com",
+            to: user.email,
+            subject: "Reset your password",
+            text: "Please click the following link to reset your password:",
             html: emailHTML,
         });
         console.log("Email sent successfully");
