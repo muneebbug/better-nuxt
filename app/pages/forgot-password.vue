@@ -1,3 +1,57 @@
+<script setup lang="ts">
+import type * as z from 'zod'
+
+import { forgotPasswordSchema } from '@@/shared/schemas/auth/reset-password.schema'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
+
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import FormError from '~/components/form/form-error.vue'
+
+type ResetPasswordRequestForm = z.infer<typeof forgotPasswordSchema>
+
+const { handleSubmit, isSubmitting } = useForm<ResetPasswordRequestForm>({
+  validationSchema: toTypedSchema(forgotPasswordSchema),
+})
+
+const auth = useAuth()
+const formError = ref<string | null>(null)
+const formSuccess = ref<string | null>(null)
+
+const onSubmit = handleSubmit(async (values) => {
+  formSuccess.value = null
+  const { data, error } = await auth.forgetPassword({
+    email: values.email,
+    redirectTo: '/reset-password',
+  })
+
+  if (error) {
+    formError.value = error.message!
+    return
+  }
+
+  if (data?.status) {
+    formSuccess.value = 'If your email is registered, you will receive a password reset link shortly.'
+  }
+})
+
+definePageMeta({
+  layout: 'auth',
+  auth: {
+    only: 'guest',
+  },
+})
+</script>
+
 <template>
   <div>
     <Card>
@@ -26,15 +80,15 @@
               <FormMessage />
             </FormItem>
           </FormField>
-            <Button
-              class="w-full"
-              type="submit"
-              :loading="isSubmitting"
-            >
-              Send Reset Link
-            </Button>
-            <FormSuccess :message="formSuccess" />
-            <FormError :error="formError" />
+          <Button
+            class="w-full"
+            type="submit"
+            :loading="isSubmitting"
+          >
+            Send Reset Link
+          </Button>
+          <FormSuccess :message="formSuccess" />
+          <FormError :error="formError" />
         </form>
         <Button
           class="w-full"
@@ -47,63 +101,3 @@
     </Card>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
-import * as z from 'zod'
-
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-
-import FormError from '~/components/form/form-error.vue'
-
-
-
-import { forgotPasswordSchema } from '@@/shared/schemas/auth/reset-password.schema'
-
-type ResetPasswordRequestForm = z.infer<typeof forgotPasswordSchema>
-
-const { handleSubmit, isSubmitting, errors } = useForm<ResetPasswordRequestForm>({
-  validationSchema: toTypedSchema(forgotPasswordSchema),
-})
-
-const auth = useAuth()
-const formError = ref<string | null>(null)
-const formSuccess = ref<string | null>(null)
-
-const callbackURL = decodeURIComponent(useRoute().query.redirect as string || '/')
-
-const onSubmit = handleSubmit(async (values) => {
-  formSuccess.value = null
-  const {data, error} = await auth.forgetPassword({
-    email: values.email,
-    redirectTo: '/reset-password',
-  })
-
-  if (error) {
-    formError.value = error.message!
-    return
-  }
-
-  if (data?.status) {
-    formSuccess.value = "If your email is registered, you will receive a password reset link shortly."
-    return
-  }
-})
-
-definePageMeta({
-  layout: 'auth',
-  auth: {
-    only: 'guest',
-  }
-})
-</script>

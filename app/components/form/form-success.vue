@@ -1,20 +1,19 @@
+<script lang="ts" setup>
+import { Alert, AlertDescription } from '@/components/ui/alert'
+
+defineProps<{
+  message: string | null
+}>()
+</script>
+
 <template>
-  <Alert variant="default" v-if="message">
+  <Alert v-if="message" variant="default">
     <!-- <AlertTitle>Error</AlertTitle> -->
     <AlertDescription class="text-emerald-500">
       {{ message }}
     </AlertDescription>
   </Alert>
 </template>
-
-<script lang="ts" setup>
-import { Alert, AlertDescription } from '@/components/ui/alert'
-
-  defineProps<{
-    message: string | null
-  }>()
-
-</script>
 
 <style>
 

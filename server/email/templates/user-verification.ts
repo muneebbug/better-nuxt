@@ -1,13 +1,12 @@
-import { User } from 'better-auth'
+import type { User } from 'better-auth'
+
 import mjml2html from 'mjml'
 
-
 const options = {
-  minify: true
+  minify: true,
 }
 
-export const userVerification = async (url: string, user: User) => {
-
+export async function userVerification(url: string, user: User) {
   const htmlOutput = await mjml2html(`
       <mjml>
   <mj-head>

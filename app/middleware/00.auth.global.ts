@@ -16,13 +16,13 @@ type MiddlewareOptions = false | {
 }
 
 declare module '#app' {
-  interface PageMeta {
+  type PageMeta = {
     auth?: MiddlewareOptions
   }
 }
 
 declare module 'vue-router' {
-  interface RouteMeta {
+  type RouteMeta = {
     auth?: MiddlewareOptions
   }
 }
@@ -48,7 +48,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
         return
       }
       return navigateTo(localePath(redirectUserTo))
-    } else {
+    }
+    else {
       // Allow guest access to this route
       return
     }
@@ -66,10 +67,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Admin Pages
   const routeBaseName = useRouteBaseName()
   const routeName = routeBaseName(to)
-  if (routeName?.toString().startsWith('admin') && user.value?.role != 'admin') {
+  if (routeName?.toString().startsWith('admin') && user.value?.role !== 'admin') {
     return navigateTo(localePath('/403'))
   }
-  if (routeName?.toString() == 'admin') {
+  if (routeName?.toString() === 'admin') {
     return navigateTo(localePath('/admin/dashboard'))
   }
 })

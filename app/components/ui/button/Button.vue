@@ -1,29 +1,32 @@
 <script setup lang="ts">
-import { Loader2 } from 'lucide-vue-next'
-import type { PrimitiveProps } from "reka-ui"
-import type { HTMLAttributes } from "vue"
-import type { ButtonVariants } from "."
-import { Primitive } from "reka-ui"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "."
+import type { PrimitiveProps } from 'reka-ui'
+import type { HTMLAttributes } from 'vue'
 
-interface Props extends PrimitiveProps {
-  variant?: ButtonVariants["variant"]
-  size?: ButtonVariants["size"]
-  class?: HTMLAttributes["class"]
+import { Loader2 } from 'lucide-vue-next'
+import { Primitive } from 'reka-ui'
+
+import { cn } from '@/lib/utils'
+
+import type { ButtonVariants } from '.'
+
+import { buttonVariants } from '.'
+
+type Props = {
+  variant?: ButtonVariants['variant']
+  size?: ButtonVariants['size']
+  class?: HTMLAttributes['class']
   loading?: boolean
   to?: string
-}
+} & PrimitiveProps
 
 const props = withDefaults(defineProps<Props>(), {
-  as: "button",
+  as: 'button',
 })
 
 const buttonBg = computed(() => {
   const buttonVariant = buttonVariants({ variant: props.variant })
   return buttonVariant.split(' ').find(className => className.startsWith('bg-'))
 })
-
 </script>
 
 <template>

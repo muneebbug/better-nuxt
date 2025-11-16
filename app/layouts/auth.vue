@@ -1,15 +1,3 @@
-<template>
-  <div class="min-h-screen flex items-center justify-center p-8">
-    <div class="w-full max-w-sm">
-      <div class="text-center mb-6">
-        <p class="text-lg font-semibold">Nuxt starter</p>
-        <p class="text-lg">{{ title }}</p>
-      </div>
-      <slot />
-    </div>
-  </div>
- </template>
-
 <script setup>
 const route = useRoute()
 
@@ -43,3 +31,19 @@ const title = computed(() => {
   }
 })
 </script>
+
+<template>
+  <div class="min-h-screen flex items-center justify-center p-8">
+    <div class="w-full max-w-sm">
+      <div class="text-center mb-6">
+        <p class="text-lg font-semibold">
+          Nuxt starter
+        </p>
+        <p class="text-lg">
+          {{ title }}
+        </p>
+      </div>
+      <slot />
+    </div>
+  </div>
+</template>

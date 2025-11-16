@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import { useColorMode } from '#imports'
+import { Home, Menu, Moon, Package2, Sun } from 'lucide-vue-next'
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+
+const auth = useAuth()
+
+const { user } = useAuth()
+
+const { generateUserInitials } = useUtils()
+const route = useRoute()
+
+const activeRoute = computed(() => route.path)
+const drawerRoutes = [
+  { label: 'Home', icon: Home, to: '/' },
+  { label: 'Protected', icon: Package2, to: '/protected' },
+]
+
+// Color mode toggle
+const colorMode = useColorMode()
+function toggleColorMode() {
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+}
+</script>
+
 <template>
   <header class="sticky top-0 z-40 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
     <nav class="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -62,9 +97,18 @@
       </Button>
       <DropdownMenu v-if="user">
         <DropdownMenuTrigger as-child>
-          <Button id="user-menu" variant="secondary" size="icon" class="rounded-full">
+          <Button
+            id="user-menu"
+            variant="secondary"
+            size="icon"
+            class="rounded-full"
+          >
             <Avatar>
-              <AvatarImage v-if="user?.image" :src="user?.image!" :alt="user?.name" />
+              <AvatarImage
+                v-if="user?.image"
+                :src="user?.image!"
+                :alt="user?.name"
+              />
               <AvatarFallback>{{ generateUserInitials(user?.name!) || 'U' }}</AvatarFallback>
             </Avatar>
             <span class="sr-only">Toggle user menu</span>
@@ -72,54 +116,18 @@
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem class="p-0 cursor-pointer">
-            <NuxtLink to="/protected" class="w-full h-full py-2 px-4">Protected</NuxtLink>
+            <NuxtLink to="/protected" class="w-full h-full py-2 px-4">
+              Protected
+            </NuxtLink>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem class="p-0 cursor-pointer" @click="auth.signOut({ redirectTo: '/' })">
-            <div class="w-full h-full py-2 px-4">Logout</div>
+            <div class="w-full h-full py-2 px-4">
+              Logout
+            </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
   </header>
 </template>
-
-<script setup lang="ts">
-import { Menu, Package2, Home, User, Sun, Moon } from 'lucide-vue-next'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-const auth = useAuth()
-import { useColorMode } from '#imports'
-
-
-
-
-
-const { user } = useAuth()
-
-
-const { generateUserInitials } = useUtils()
-const route = useRoute()
-
-const activeRoute = computed(() => route.path)
-const drawerRoutes = [
-  { label: 'Home', icon: Home, to: '/' },
-  { label: 'Protected', icon: Package2, to: '/protected' },
-]
-
-// Color mode toggle
-const colorMode = useColorMode();
-const currentMode = computed(() => colorMode.value);
-
-function toggleColorMode() {
-  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
-}
-</script>
