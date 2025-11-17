@@ -2,11 +2,13 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { admin } from 'better-auth/plugins'
 
+import env from '../../config/env.config'
 import { useDrizzle } from '../database/drizzle'
 import * as schema from '../database/schema'
 import { sendResetPasswordEmail, sendUserVerificationEmail } from '../email'
 
 export const auth = betterAuth({
+  secret: env.NUXT_BETTER_AUTH_SECRET!,
   database: drizzleAdapter(useDrizzle(), {
     provider: 'sqlite',
     schema: {

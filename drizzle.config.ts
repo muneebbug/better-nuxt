@@ -1,6 +1,6 @@
 import { defineConfig } from 'drizzle-kit'
 
-import { tursoConfig } from '../../config/turso.config'
+import { tursoConfig } from './config/turso.config'
 
 export default defineConfig({
   dialect: 'turso',
