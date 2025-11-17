@@ -26,6 +26,10 @@ export default withNuxt(antfu({
         max: 1,
       },
     }],
+    // 'padding-line-between-statements': [
+    //   'error',
+    //   { blankLine: 'always', prev: 'export', next: 'export' },
+    // ],
     'ts/no-redeclare': 'off',
     'ts/consistent-type-definitions': ['error', 'type'],
     'no-console': ['warn'],
