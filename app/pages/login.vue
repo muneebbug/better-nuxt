@@ -23,7 +23,7 @@ const { handleSubmit, isSubmitting } = useForm<LoginForm>({
   validationSchema: toTypedSchema(loginSchema),
 })
 
-const auth = useAuth()
+const auth = useAuthStore()
 const formError = ref<string | null>(null)
 const callbackURL = decodeURIComponent(useRoute().query.redirect as string || '/')
 

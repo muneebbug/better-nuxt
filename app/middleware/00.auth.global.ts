@@ -16,13 +16,15 @@ type MiddlewareOptions = false | {
 }
 
 declare module '#app' {
-  type PageMeta = {
+  /* eslint-disable-next-line ts/consistent-type-definitions */
+  interface PageMeta {
     auth?: MiddlewareOptions
   }
 }
 
 declare module 'vue-router' {
-  type RouteMeta = {
+  /* eslint-disable-next-line ts/consistent-type-definitions */
+  interface RouteMeta {
     auth?: MiddlewareOptions
   }
 }
@@ -32,10 +34,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (to.meta?.auth === false) {
     return
   }
-  const { loggedIn, user, fetchSession } = useAuth()
+  const { loggedIn, user } = storeToRefs(useAuthStore())
+  const { fetchSession } = useAuthStore()
+
   const redirectOptions = useRuntimeConfig().public.auth
   const { only, redirectUserTo, redirectGuestTo } = defu(to.meta?.auth, redirectOptions)
-
   await fetchSession()
 
   const localePath = useLocalePath()
@@ -67,7 +70,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Admin Pages
   const routeBaseName = useRouteBaseName()
   const routeName = routeBaseName(to)
-  if (routeName?.toString().startsWith('admin') && user.value?.role !== 'admin') {
+  if (routeName?.toString().startsWith('admin') && user?.value?.role !== 'admin') {
     return navigateTo(localePath('/403'))
   }
   if (routeName?.toString() === 'admin') {

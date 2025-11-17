@@ -13,9 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
-const auth = useAuth()
-
-const { user } = useAuth()
+const { user, loggedIn } = storeToRefs(useAuthStore())
+const { signOut } = useAuthStore()
 
 const { generateUserInitials } = useUtils()
 const route = useRoute()
@@ -95,7 +94,7 @@ function toggleColorMode() {
         <Moon class="h-5 w-5 hidden dark:inline" />
         <span class="sr-only">Toggle color mode</span>
       </Button>
-      <DropdownMenu v-if="user">
+      <DropdownMenu v-if="loggedIn">
         <DropdownMenuTrigger as-child>
           <Button
             id="user-menu"
@@ -121,7 +120,7 @@ function toggleColorMode() {
             </NuxtLink>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem class="p-0 cursor-pointer" @click="auth.signOut({ redirectTo: '/' })">
+          <DropdownMenuItem class="p-0 cursor-pointer" @click="signOut({ redirectTo: '/' })">
             <div class="w-full h-full py-2 px-4">
               Logout
             </div>

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "3f828d59-5aaf-452a-929d-87673d4fecfa",
+  "id": "62f6dc51-dc31-4236-88da-1bd109e13002",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -89,7 +89,8 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "(cast(unixepoch('subsecond') * 1000 as integer))"
         },
         "updated_at": {
           "name": "updated_at",
@@ -148,7 +149,8 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "(cast(unixepoch('subsecond') * 1000 as integer))"
         },
         "updated_at": {
           "name": "updated_at",
@@ -231,20 +233,6 @@
           "notNull": true,
           "autoincrement": false
         },
-        "firstName": {
-          "name": "firstName",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "lastName": {
-          "name": "lastName",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "email": {
           "name": "email",
           "type": "text",
@@ -257,7 +245,8 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": false
         },
         "image": {
           "name": "image",
@@ -266,19 +255,34 @@
           "notNull": false,
           "autoincrement": false
         },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(cast(unixepoch('subsecond') * 1000 as integer))"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(cast(unixepoch('subsecond') * 1000 as integer))"
+        },
         "role": {
           "name": "role",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "'user'"
+          "notNull": false,
+          "autoincrement": false
         },
         "banned": {
           "name": "banned",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
           "default": false
         },
@@ -296,16 +300,16 @@
           "notNull": false,
           "autoincrement": false
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -360,15 +364,17 @@
           "name": "created_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(cast(unixepoch('subsecond') * 1000 as integer))"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(cast(unixepoch('subsecond') * 1000 as integer))"
         }
       },
       "indexes": {},

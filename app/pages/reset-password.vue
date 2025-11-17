@@ -23,7 +23,7 @@ const { handleSubmit, isSubmitting } = useForm<ResetPasswordRequestForm>({
   validationSchema: toTypedSchema(resetPasswordSchema),
 })
 const token = useRoute().query.token as string
-const auth = useAuth()
+const auth = useAuthStore()
 const formError = ref<string | null>(null)
 const formSuccess = ref<string | null>(null)
 

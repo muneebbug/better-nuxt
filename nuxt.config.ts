@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
     '@nuxt/eslint',
+    '@pinia/nuxt',
     // on dev, use nodemailer
     ...(env.NODE_ENV === 'development' ? ['nuxt-nodemailer'] : []),
   ],
@@ -43,7 +44,6 @@ export default defineNuxtConfig({
     port: 3000,
   },
   compatibilityDate: '2025-07-15',
-
   vite: {
     plugins: [
       tailwindcss(),

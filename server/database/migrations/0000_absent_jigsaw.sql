@@ -10,7 +10,7 @@ CREATE TABLE `account` (
 	`refresh_token_expires_at` integer,
 	`scope` text,
 	`password` text,
-	`created_at` integer NOT NULL,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	`updated_at` integer NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
@@ -19,7 +19,7 @@ CREATE TABLE `session` (
 	`id` text PRIMARY KEY NOT NULL,
 	`expires_at` integer NOT NULL,
 	`token` text NOT NULL,
-	`created_at` integer NOT NULL,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	`updated_at` integer NOT NULL,
 	`ip_address` text,
 	`user_agent` text,
@@ -32,17 +32,17 @@ CREATE UNIQUE INDEX `session_token_unique` ON `session` (`token`);--> statement-
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
-	`firstName` text,
-	`lastName` text,
 	`email` text NOT NULL,
-	`email_verified` integer NOT NULL,
+	`email_verified` integer DEFAULT false NOT NULL,
 	`image` text,
-	`role` text DEFAULT 'user' NOT NULL,
-	`banned` integer DEFAULT false NOT NULL,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`role` text,
+	`banned` integer DEFAULT false,
 	`ban_reason` text,
 	`ban_expires` integer,
-	`created_at` integer NOT NULL,
-	`updated_at` integer NOT NULL
+	`first_name` text NOT NULL,
+	`last_name` text NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
@@ -51,6 +51,6 @@ CREATE TABLE `verification` (
 	`identifier` text NOT NULL,
 	`value` text NOT NULL,
 	`expires_at` integer NOT NULL,
-	`created_at` integer,
-	`updated_at` integer
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL
 );

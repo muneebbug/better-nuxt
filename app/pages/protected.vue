@@ -8,10 +8,10 @@ definePageMeta({
   },
 })
 
-const { user } = useAuth()
+const { user } = storeToRefs(useAuthStore())
 
 const { generateUserInitials } = useUtils()
-const initials = computed(() => generateUserInitials(user.value?.name || '') || 'U')
+const initials = computed(() => generateUserInitials(user?.value?.name || '') || 'U')
 </script>
 
 <template>

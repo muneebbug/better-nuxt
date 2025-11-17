@@ -23,7 +23,7 @@ const { handleSubmit, isSubmitting } = useForm<ResetPasswordRequestForm>({
   validationSchema: toTypedSchema(forgotPasswordSchema),
 })
 
-const auth = useAuth()
+const auth = useAuthStore()
 const formError = ref<string | null>(null)
 const formSuccess = ref<string | null>(null)
 

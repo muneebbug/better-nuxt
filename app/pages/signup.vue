@@ -22,7 +22,7 @@ const { handleSubmit, isSubmitting, validateField } = useForm<RegisterForm>({
   validationSchema: toTypedSchema(signupSchema),
 })
 
-const auth = useAuth()
+const auth = useAuthStore()
 const success = ref(false)
 const formError = ref<string | null>(null)
 
