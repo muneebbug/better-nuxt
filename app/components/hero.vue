@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
+
+const { loggedIn } = storeToRefs(useAuthStore())
 </script>
 
 <template>
@@ -12,7 +14,7 @@ import { Button } from '@/components/ui/button'
         Minimal, fast, and practical starter with auth, UI components, and serverless-ready setup.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <Button to="/signup">
+        <Button :to="loggedIn ? '/protected' : '/signup'">
           Get Started
         </Button>
         <Button

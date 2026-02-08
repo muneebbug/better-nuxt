@@ -39,6 +39,16 @@ function toggleColorMode() {
         to="/"
         class="flex items-center gap-2 text-lg font-semibold md:text-base"
       >
+        <img
+          src="/logo-inverted.svg"
+          alt="Logo"
+          class="h-6 dark:inline hidden"
+        >
+        <img
+          src="/logo.svg"
+          alt="Logo"
+          class="h-6 dark:hidden"
+        >
         <span class="sr-only">Nuxt 4 Starter</span>
       </NuxtLink>
       <NuxtLink
@@ -67,7 +77,23 @@ function toggleColorMode() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" class="flex flex-col">
-        <nav class="grid gap-2 text-lg font-medium">
+        <NuxtLink
+          to="/"
+          class="flex items-center gap-2 text-lg font-semibold md:text-base p-4"
+        >
+          <img
+            src="/logo-inverted.svg"
+            alt="Logo"
+            class="h-6 dark:inline hidden"
+          >
+          <img
+            src="/logo.svg"
+            alt="Logo"
+            class="h-6 dark:hidden"
+          >
+          <span class="sr-only">Nuxt 4 Starter</span>
+        </NuxtLink>
+        <nav class="grid gap-2 text-lg font-medium p-4">
           <NuxtLink
             v-for="item in drawerRoutes"
             :key="item.label"
@@ -82,6 +108,23 @@ function toggleColorMode() {
       </SheetContent>
     </Sheet>
 
+    <NuxtLink
+      to="/"
+      class="md:hidden flex items-center gap-2 text-lg font-semibold md:text-base"
+    >
+      <img
+        src="/logo-inverted.svg"
+        alt="Logo"
+        class="h-6 dark:inline hidden"
+      >
+      <img
+        src="/logo.svg"
+        alt="Logo"
+        class="h-6 dark:hidden"
+      >
+      <span class="sr-only">Nuxt 4 Starter</span>
+    </NuxtLink>
+
     <div class="flex items-center gap-4 ml-auto md:gap-2 lg:gap-4">
       <Button
         variant="ghost"
@@ -94,6 +137,16 @@ function toggleColorMode() {
         <Moon class="h-5 w-5 hidden dark:inline" />
         <span class="sr-only">Toggle color mode</span>
       </Button>
+      <div class="flex items-center gap-2">
+        <Button
+          v-if="!loggedIn"
+          aria-label="Login"
+          to="/login"
+        >
+          Login
+          <span class="sr-only">Login</span>
+        </Button>
+      </div>
       <DropdownMenu v-if="loggedIn">
         <DropdownMenuTrigger as-child>
           <Button
