@@ -5,6 +5,7 @@ import Hero from '~/components/hero.vue'
 
 definePageMeta({
   layout: 'default',
+  auth: false,
 })
 </script>
 
