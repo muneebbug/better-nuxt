@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "nuxt": {
+      "type": "http",
+      "url": "https://nuxt.com/mcp"
+    },
+    "better-auth": {
+      "url": "https://mcp.better-auth.com/mcp"
+    }
+  }
+}
