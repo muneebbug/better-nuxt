@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useColorMode } from '#imports'
 import { Home, Menu, Moon, Package2, Sun } from 'lucide-vue-next'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -12,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { useColorMode } from '#imports'
 
 const { user, loggedIn } = storeToRefs(useAuthStore())
 const { signOut } = useAuthStore()
