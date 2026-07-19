@@ -9,11 +9,13 @@ const tursoClient = createClient({
   authToken: tursoConfig.authToken,
 })
 
+const db = drizzle(tursoClient)
+
 export function useDrizzle() {
-  return drizzle(tursoClient)
+  return db
 }
 
 export const tables = schema
 
-export const UserInsert = schema.user.$inferInsert
-export type UserRegisterType = Omit<typeof UserInsert, 'createdAt' | 'updatedAt' | 'id' | 'emailVerified'>
+export type UserInsert = typeof schema.user.$inferInsert
+export type UserRegisterType = Omit<UserInsert, 'createdAt' | 'updatedAt' | 'id' | 'emailVerified'>

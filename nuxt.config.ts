@@ -12,8 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/eslint',
     '@pinia/nuxt',
-    // on dev, use nodemailer
-    ...(env.NODE_ENV === 'development' ? ['nuxt-nodemailer'] : []),
+    'nuxt-nodemailer',
   ],
   devtools: { enabled: false },
   css: ['@/assets/css/main.css'],
@@ -52,22 +51,17 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
   },
+  nodemailer: {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+      user: env.NUXT_TEST_EMAIL_AUTH_USER,
+      pass: env.NUXT_TEST_EMAIL_AUTH_PASSWORD,
+    },
+  },
   shadcn: {
     prefix: '',
     componentDir: '@/components/ui',
   },
-
-  ...(env.NODE_ENV === 'development'
-    ? {
-        nodemailer: {
-          host: 'smtp.ethereal.email',
-          port: 587,
-          auth: {
-            user: env.NUXT_TEST_EMAIL_AUTH_USER,
-            pass: env.NUXT_TEST_EMAIL_AUTH_PASSWORD,
-          },
-        },
-      }
-    : {}),
 
 })

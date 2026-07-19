@@ -5,6 +5,7 @@ import { forgotPasswordSchema } from '@@/shared/schemas/auth/reset-password.sche
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 
+import FormError from '@/components/form/form-error.vue'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -15,7 +16,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import FormError from '~/components/form/form-error.vue'
 
 type ResetPasswordRequestForm = z.infer<typeof forgotPasswordSchema>
 
@@ -72,7 +72,7 @@ definePageMeta({
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  type="text"
+                  type="email"
                   placeholder="abc@gmail.com"
                   v-bind="componentField"
                 />

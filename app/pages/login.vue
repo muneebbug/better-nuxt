@@ -67,7 +67,7 @@ definePageMeta({
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  type="text"
+                  type="email"
                   placeholder="abc@gmail.com"
                   v-bind="componentField"
                 />
