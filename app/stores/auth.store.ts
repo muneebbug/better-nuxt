@@ -85,8 +85,8 @@ export const useAuthStore = defineStore('useAuthStore', () => {
   const useSession = (...args: Parameters<typeof client.useSession>) =>
     client.useSession(...args)
 
-  const forgetPassword = (...args: Parameters<typeof client.forgetPassword>) =>
-    client.forgetPassword(...args)
+  const requestPasswordReset = (...args: Parameters<typeof client.requestPasswordReset>) =>
+    client.requestPasswordReset(...args)
 
   const resetPassword = (...args: Parameters<typeof client.resetPassword>) =>
     client.resetPassword(...args)
@@ -119,7 +119,7 @@ export const useAuthStore = defineStore('useAuthStore', () => {
     signUp,
     signOut,
     useSession,
-    forgetPassword,
+    requestPasswordReset,
     resetPassword,
     sendVerificationEmail,
     fetchSession,

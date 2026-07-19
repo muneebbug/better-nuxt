@@ -29,7 +29,7 @@ const formSuccess = ref<string | null>(null)
 
 const onSubmit = handleSubmit(async (values) => {
   formSuccess.value = null
-  const { data, error } = await auth.forgetPassword({
+  const { data, error } = await auth.requestPasswordReset({
     email: values.email,
     redirectTo: '/reset-password',
   })

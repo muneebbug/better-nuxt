@@ -114,7 +114,7 @@ definePageMeta({
               <FormMessage />
             </FormItem>
           </FormField>
-          <FormField v-slot="{ componentField }" name="passwordConfirm">
+          <FormField v-slot="{ componentField }" name="confirmPassword">
             <FormItem>
               <FormLabel>
                 <span>
@@ -126,7 +126,7 @@ definePageMeta({
                   type="password"
                   placeholder="Password"
                   v-bind="componentField"
-                  @input="validateField('passwordConfirm')"
+                  @input="validateField('confirmPassword')"
                 />
               </FormControl>
               <FormMessage />

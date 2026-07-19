@@ -21,6 +21,7 @@
     "preview": "nuxt preview",
     "clean": "nuxt cleanup",
     "postinstall": "nuxt prepare",
+    "setup": "bun db:generate && bun db:migrate",
     "db:generate": "drizzle-kit generate --config ./server/database/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config ./server/database/drizzle.config.ts",
     "db:studio": "drizzle-kit studio --config ./server/database/drizzle.config.ts",
@@ -82,6 +83,6 @@
     "typescript": "^6.0.3"
   },
   "lint-staged": {
-    "*": "pnpm lint"
+    "*": "bun lint"
   }
 }

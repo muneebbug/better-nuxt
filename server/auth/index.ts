@@ -8,6 +8,7 @@ import * as schema from '../database/schema'
 import { sendResetPasswordEmail, sendUserVerificationEmail } from '../email'
 
 export const auth = betterAuth({
+  baseURL: env.NUXT_BETTER_AUTH_URL!,
   secret: env.NUXT_BETTER_AUTH_SECRET!,
   database: drizzleAdapter(useDrizzle(), {
     provider: 'sqlite',

@@ -1,15 +1,14 @@
 import { z } from 'zod'
 
-import { ConfirmPasswordSchema, EmailSchema, FirstNameSchema, LastNameSchema, PasswordSchema } from '../common'
+import { EmailSchema, FirstNameSchema, LastNameSchema, PasswordSchema } from '../common'
 
 export const signupSchema = z.object({
   email: EmailSchema,
   password: PasswordSchema,
-  // passwordConfirm must be the same as password
-  passwordConfirm: ConfirmPasswordSchema,
+  confirmPassword: PasswordSchema,
   firstName: FirstNameSchema,
   lastName: LastNameSchema,
-}).refine(data => data.password === data.passwordConfirm, {
+}).refine(data => data.password === data.confirmPassword, {
   message: 'Passwords do not match',
-  path: ['passwordConfirm'],
+  path: ['confirmPassword'],
 })

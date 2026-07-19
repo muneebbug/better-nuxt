@@ -10,24 +10,13 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
     '@nuxtjs/i18n',
-    '@nuxtjs/seo',
     '@nuxt/eslint',
     '@pinia/nuxt',
     // on dev, use nodemailer
     ...(env.NODE_ENV === 'development' ? ['nuxt-nodemailer'] : []),
   ],
-  components: [
-    {
-      path: './components/ui',
-      extensions: ['.vue'],
-    },
-    {
-      path: './components',
-      extensions: ['.vue'],
-    },
-  ],
   devtools: { enabled: false },
-  css: ['./app/assets/css/main.css'],
+  css: ['@/assets/css/main.css'],
   colorMode: {
     classSuffix: '',
   },
@@ -43,7 +32,7 @@ export default defineNuxtConfig({
     host: '127.0.0.1',
     port: 3000,
   },
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: '2026-07-19',
   vite: {
     plugins: [
       tailwindcss(),
@@ -56,7 +45,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    vueI18n: '~/i18n/i18n.config.ts',
+    vueI18n: '@/i18n/i18n.config.ts',
     baseUrl: env.NUXT_PUBLIC_APP_URL,
     locales: [
       { code: 'en', language: 'en-US', name: 'English' },
@@ -65,7 +54,7 @@ export default defineNuxtConfig({
   },
   shadcn: {
     prefix: '',
-    componentDir: './app/components/ui',
+    componentDir: '@/components/ui',
   },
 
   ...(env.NODE_ENV === 'development'

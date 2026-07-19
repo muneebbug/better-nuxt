@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Paintbrush, Rocket, ShieldCheck } from 'lucide-vue-next'
 
-import Hero from '~/components/hero.vue'
+import Hero from '@/components/hero.vue'
 
 definePageMeta({
   layout: 'default',
