@@ -15,7 +15,7 @@ export default withNuxt(antfu({
     semi: false,
     quotes: 'single',
   },
-  ignores: ['.pnpm-store/**', '**/migrations/*'],
+  ignores: ['.pnpm-store/**', '**/migrations/*', 'README.md'],
 }, {
   rules: {
     'vue/max-attributes-per-line': ['error', {
